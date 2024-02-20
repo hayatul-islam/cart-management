@@ -1,9 +1,12 @@
 import Checkout from "../components/checkout/Checkout";
+import MainLayout from "./layout/mainLayout";
 
 export default function CheckoutPage() {
   return (
-    <div className="container py-6">
-      <Checkout />
-    </div>
+    <MainLayout>
+      <div className="container py-6">
+        <Checkout />
+      </div>
+    </MainLayout>
   );
 }

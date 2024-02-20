@@ -4,7 +4,11 @@ import getFindProduct from "../utils/getFindProduct";
 
 const ProductProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [skip, setSkip] = useState(0);
+  const limit = 12;
 
+  // cart functionality
   const handleAddToCart = (product, quantity) => {
     const findProduct = getFindProduct(cartData, product?.id);
 
@@ -42,9 +46,38 @@ const ProductProvider = ({ children }) => {
     }
   };
 
+  // search functionality
+  const handleSearchQuery = (value) => {
+    setSearchQuery(value);
+  };
+
+  // pagination functionality
+
+  const currentPage = skip / limit;
+  const handleSkip = (item) => {
+    if (item === "prev") {
+      setSkip(skip - limit);
+    } else if (item === "next") {
+      setSkip(skip + limit);
+    } else {
+      setSkip(limit * item);
+    }
+  };
+
   return (
     <ProductsContext.Provider
-      value={{ cartData, handleAddToCart, handleRemoveCart, handleQuantity }}
+      value={{
+        cartData,
+        handleAddToCart,
+        handleRemoveCart,
+        handleQuantity,
+        searchQuery,
+        handleSearchQuery,
+        skip,
+        limit,
+        currentPage,
+        handleSkip,
+      }}
     >
       {children}
     </ProductsContext.Provider>
