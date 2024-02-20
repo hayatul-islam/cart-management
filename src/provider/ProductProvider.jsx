@@ -7,7 +7,9 @@ import getFindProduct from "../utils/getFindProduct";
 
 const ProductProvider = ({ children }) => {
   const allProducts = useFetchAllProducts();
-  const [cartData, setCartData] = useState([]);
+  const initialCartData = localStorage.getItem("carts");
+  const parsedCartData = initialCartData ? JSON.parse(initialCartData) : [];
+  const [cartData, setCartData] = useState(parsedCartData);
   const [searchQuery, setSearchQuery] = useState("");
   const [skip, setSkip] = useState(0);
   const [isOpenFilter, setIsOpenFilter] = useState(false);
@@ -35,11 +37,13 @@ const ProductProvider = ({ children }) => {
     }
     product.quantity = 1;
     setCartData([...cartData, product]);
+    localStorage.setItem("carts", JSON.stringify([...cartData, product]));
   };
 
   const handleRemoveCart = (id) => {
     const data = cartData?.filter((p) => p.id !== Number(id));
     setCartData(data);
+    localStorage.setItem("carts", JSON.stringify(data));
   };
 
   const handleQuantity = (id, quantity) => {
@@ -56,6 +60,7 @@ const ProductProvider = ({ children }) => {
 
     if (quantity > 0) {
       setCartData(updateData);
+      localStorage.setItem("carts", JSON.stringify(updateData));
     } else {
       toast.warn("Quantity must be at least 1.");
     }
@@ -63,6 +68,7 @@ const ProductProvider = ({ children }) => {
 
   const handleOrderPlace = () => {
     setCartData([]);
+    localStorage.setItem("carts", []);
     toast.success("Your order has been successful.");
   };
 
