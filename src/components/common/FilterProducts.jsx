@@ -5,9 +5,17 @@ import { useFetchCategory } from "../../hooks";
 
 export default function FilterProducts() {
   const { data: categories } = useFetchCategory();
-  const { handleFilter, closeFilter } = useContext(ProductsContext);
+  const { handleFilter, closeFilter, filters } = useContext(ProductsContext);
 
-  const brands = ["Apple", "Samsung", "OPPO", "Huawei", "Infinix"];
+  const brands = [
+    "Apple",
+    "Samsung",
+    "OPPO",
+    "Huawei",
+    "Infinix",
+    "HP Pavilion",
+    "Royal_Mirage",
+  ];
 
   return (
     <div className=" bg-white py-5 px-4 h-full space-y-4 shadow relative">
@@ -24,7 +32,7 @@ export default function FilterProducts() {
             type="number"
             min="0"
             max="2000"
-            defaultValue="0"
+            defaultValue={filters?.minPrice}
             className="w-24 bg-gray-200 rounded-lg outline-none p-2"
           />
           <span>To</span>
@@ -33,7 +41,7 @@ export default function FilterProducts() {
             type="number"
             min="0"
             max="2000"
-            defaultValue="2000"
+            defaultValue={filters?.maxPrice}
             className="w-24 bg-gray-200 rounded-lg outline-none p-2"
           />
         </div>
@@ -46,7 +54,7 @@ export default function FilterProducts() {
           min="1"
           max="5"
           step=".5"
-          defaultValue="1"
+          defaultValue={filters?.rating}
           className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
         />
       </div>
@@ -59,8 +67,7 @@ export default function FilterProducts() {
               className="form-radio h-4 w-4 text-blue-600"
               name="brand"
               value={brand}
-              // checked={selectedBrand === brand}
-              // onChange={() => handleBrandChange(brand)}
+              checked={filters?.brand === brand}
               onChange={(e) => handleFilter("brand", e.target.value)}
             />
             <span className="ml-2">{brand}</span>
@@ -71,14 +78,14 @@ export default function FilterProducts() {
         <h3 className="font-medium text-gray-500 text-lg border-b">
           Categories:{" "}
         </h3>
-        {categories?.slice(0, 10)?.map((cat, index) => (
+        {categories?.slice(0, 15)?.map((cat, index) => (
           <label key={index} className=" flex items-center cursor-pointer ">
             <input
               type="radio"
               className="form-radio h-4 w-4 text-blue-600"
               name="cat"
               value={cat}
-              // checked={selectedBrand === brand}
+              checked={filters?.category === cat}
               onChange={(e) => handleFilter("category", e.target.value)}
             />
             <span className="ml-2 capitalize">{cat}</span>
