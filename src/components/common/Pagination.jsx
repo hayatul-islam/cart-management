@@ -13,7 +13,10 @@ export default function Pagination({ total }) {
           <button
             onClick={() => handleSkip("prev")}
             disabled={currentPage == 0}
-            className="flex items-center justify-center px-4 h-12 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+            className={`flex items-center justify-center px-4 h-12 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 ${
+              currentPage === 0 &&
+              "opacity-50 hover:bg-white hover:text-gray-500"
+            }`}
           >
             <span className="sr-only">Previous</span>
             <svg
@@ -37,8 +40,10 @@ export default function Pagination({ total }) {
           <li key={item}>
             <button
               onClick={() => handleSkip(item)}
-              className={`flex items-center justify-center px-4 h-12 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ${
-                currentPage === item && "bg-gray-100 text-blue-700 font-medium"
+              className={`flex items-center justify-center px-4 h-12 leading-tight  border border-gray-300 hover:bg-gray-100 hover:text-gray-700 ${
+                currentPage === item
+                  ? "bg-gray-100 text-blue-700 font-medium"
+                  : "text-gray-500 bg-white"
               } `}
             >
               {item}
@@ -50,7 +55,11 @@ export default function Pagination({ total }) {
           <button
             onClick={() => handleSkip("next")}
             disabled={currentPage >= items?.length}
-            className="flex items-center justify-center px-4 h-12 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 "
+            className={`flex items-center justify-center px-4 h-12 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 
+            hover:text-gray-700 ${
+              currentPage >= items?.length &&
+              "opacity-50 hover:bg-white hover:text-gray-500"
+            } `}
           >
             <span className="sr-only">Next</span>
             <svg

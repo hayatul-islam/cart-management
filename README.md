@@ -17,12 +17,12 @@ On the dashboard page, users will see an item list. There will be
 pagination, and users can change pages per size. There will be 4 filters
 on the left sidebar: price, rating, category, and brand. All four
 filters with multiple selections should be the right match. The user
-cannot add more product items than their quantity.
+cannot add more product items than their quantity. >> Done
 
 On the detail page, users can add items and see a description of that
-product.
+product. >> Done
 
 On the checkout page, the user can see all of his added products. The
 user can update his cart item. Try to use react state management. If the
 user adds, deletes, or updates the quantity of the product, it will
-instantly change in your header cart section and checkout page.
+instantly change in your header cart section and checkout page. >> Done

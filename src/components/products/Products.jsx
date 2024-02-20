@@ -8,10 +8,13 @@ import ProductHeader from "./ProductHeader";
 
 export default function Products() {
   const {
-    data: { products, total },
+    data: { products, total: productLength },
     isLoading,
   } = useFetchProducts();
-  const { limit } = useContext(ProductsContext);
+  const { limit, filterData, showData } = useContext(ProductsContext);
+
+  const data = showData === "filter" ? filterData : products;
+  const total = showData === "filter" ? filterData?.length : productLength;
 
   if (isLoading) {
     return <Loading />;
@@ -20,11 +23,11 @@ export default function Products() {
   return (
     <div className="space-y-2">
       <h2 className="text-3xl font-bold text-gray-600">Shop</h2>
-      {products?.length > 0 ? (
+      {data?.length > 0 ? (
         <>
           <ProductHeader total={total} />
           <div className="grid grid-cols-3 gap-6 pt-2">
-            {products?.map((product) => (
+            {data?.map((product) => (
               <Product key={product?.id} product={product} />
             ))}
           </div>

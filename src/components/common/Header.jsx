@@ -20,7 +20,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-primary sticky top-0 py-3">
+    <header className="bg-primary sticky top-0 py-3 z-[999]">
       <div className="container px-4 py-2 flex items-center justify-between">
         <div className="flex items-center">
           <Link to="/" className="text-white font-bold text-xl">

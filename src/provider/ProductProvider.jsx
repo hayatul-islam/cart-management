@@ -1,12 +1,27 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { ProductsContext } from "../context";
+import { useFetchAllProducts } from "../hooks";
+import getFilterProducts from "../utils/getFilterProducts";
 import getFindProduct from "../utils/getFindProduct";
 
 const ProductProvider = ({ children }) => {
+  const allProducts = useFetchAllProducts();
   const [cartData, setCartData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [skip, setSkip] = useState(0);
-  const limit = 12;
+  const [isOpenFilter, setIsOpenFilter] = useState(false);
+  const [showData, setShowData] = useState("all");
+  const [filters, setFilters] = useState({
+    minPrice: 0,
+    maxPrice: 2000,
+    rating: 1,
+    category: "",
+    brand: "",
+  });
+  const limit = 30;
+
+  const filterData = getFilterProducts(allProducts?.data, filters);
 
   // cart functionality
   const handleAddToCart = (product, quantity) => {
@@ -14,7 +29,7 @@ const ProductProvider = ({ children }) => {
 
     if (findProduct) {
       if (!quantity || quantity === findProduct?.quantity) {
-        return alert("Product already add to cart.");
+        return toast.warn("Product already add to cart.");
       }
       return handleQuantity(product?.id, quantity);
     }
@@ -42,13 +57,14 @@ const ProductProvider = ({ children }) => {
     if (quantity > 0) {
       setCartData(updateData);
     } else {
-      alert("Quantity must be at least 1.");
+      toast.warn("Quantity must be at least 1.");
     }
   };
 
   // search functionality
   const handleSearchQuery = (value) => {
     setSearchQuery(value);
+    setShowData("all");
   };
 
   // pagination functionality
@@ -61,6 +77,21 @@ const ProductProvider = ({ children }) => {
     } else {
       setSkip(limit * item);
     }
+  };
+
+  // filter functionality
+  const openFilter = () => {
+    setIsOpenFilter(true);
+  };
+  const closeFilter = () => {
+    setIsOpenFilter(false);
+  };
+  const handleFilter = (item, value) => {
+    setFilters({
+      ...filters,
+      [item]: value,
+    });
+    setShowData("filter");
   };
 
   return (
@@ -76,6 +107,13 @@ const ProductProvider = ({ children }) => {
         limit,
         currentPage,
         handleSkip,
+        filters,
+        handleFilter,
+        isOpenFilter,
+        openFilter,
+        closeFilter,
+        filterData,
+        showData,
       }}
     >
       {children}
