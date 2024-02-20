@@ -20,12 +20,12 @@ export default function TableRaw({ product }) {
           className="mt-1 text-red-600 cursor-pointer"
         />
       </td>
-      <td className="border p-2">
+      <td className="border p-2 hidden md:block">
         <img className="w-10 h-10" src={thumbnail} alt="" />
       </td>
       <td className="border px-2 text-blue-600 font-medium">{title}</td>
       <td className="border px-2">${price}</td>
-      <td className="border px-2">
+      <td className="border px-2 ">
         <input
           onChange={handleChange}
           className="w-16"

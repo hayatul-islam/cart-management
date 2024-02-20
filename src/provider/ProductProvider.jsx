@@ -61,6 +61,11 @@ const ProductProvider = ({ children }) => {
     }
   };
 
+  const handleOrderPlace = () => {
+    setCartData([]);
+    toast.success("Your order has been successful.");
+  };
+
   // search functionality
   const handleSearchQuery = (value) => {
     setSearchQuery(value);
@@ -101,6 +106,7 @@ const ProductProvider = ({ children }) => {
         handleAddToCart,
         handleRemoveCart,
         handleQuantity,
+        handleOrderPlace,
         searchQuery,
         handleSearchQuery,
         skip,

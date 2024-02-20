@@ -6,7 +6,7 @@ import { ProductsContext } from "../../context";
 export default function ProductLayout({ children }) {
   const { isOpenFilter } = useContext(ProductsContext);
   return (
-    <div className="container  flex justify-between gap-6 py-6 relative">
+    <div className="container md:flex justify-between gap-6 py-6 space-y-6 md:space-y-0 relative">
       <div className="w-full">{children}</div>
       <div className="w-[350px]">
         <AddToCart />

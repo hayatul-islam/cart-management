@@ -15,11 +15,11 @@ export default function Product({ product }) {
 
         <Link
           to={`/products/${id}`}
-          className="text-xl font-semibold tracking-tight text-gray-900 block hover:text-blue-500"
+          className="text-lg md:text-xl font-semibold tracking-tight text-gray-900 block hover:text-blue-500 px-1"
         >
           {title}
         </Link>
-        <p className="text-lg font-bold text-red-400 ">${price}</p>
+        <p className="text-md md:text-lg font-bold text-red-400 ">${price}</p>
       </div>
 
       <button

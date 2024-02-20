@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { ProductsContext } from "../../context";
 import Cart from "./Cart";
 
-export default function AddToCart() {
+export default function AddToCart({ page }) {
   const { cartData } = useContext(ProductsContext);
 
   return (
-    <div className="w-[280px]">
+    <div className={`w-full ${!page && "md:w-[280px]"} `}>
       <h2 className="text-3xl font-bold text-gray-600">Cart</h2>
       {cartData?.length <= 0 ? (
         <p className="text-gray-400 pt-3 font-medium">

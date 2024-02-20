@@ -36,10 +36,7 @@ export default function Cart({ product }) {
         >
           View cart
         </Link>
-        <Link
-          to={`/checkout?id=${id}`}
-          className="bg-primary px-4 py-2  text-white"
-        >
+        <Link to={`/checkout`} className="bg-primary px-4 py-2  text-white">
           Checkout
         </Link>
       </div>

@@ -1,36 +1,48 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { ProductsContext } from "../../context";
 import TableRaw from "./TableRaw";
 
 export default function Checkout() {
-  const { cartData } = useContext(ProductsContext);
-
+  const { cartData, handleOrderPlace } = useContext(ProductsContext);
+  const navigate = useNavigate();
   const subtotal = cartData?.reduce((total, item) => {
     const itemPrice = item.price * item.quantity;
     return total + itemPrice;
   }, 0);
 
+  const handleOrder = () => {
+    if (cartData?.length > 0) {
+      handleOrderPlace();
+      navigate("/");
+    } else {
+      toast.warn("Please add to cart product.");
+    }
+  };
+
   return (
     <div className="space-y-12">
-      <div className="space-y-3">
-        <table className="w-full">
-          <thead>
-            <tr className="text-left">
-              <th className="border p-2"> </th>
-              <th className="border px-2"> </th>
-              <th className="border p-2">Product</th>
-              <th className="border px-2">Price</th>
-              <th className="border px-2">Quantity</th>
-              <th className="border px-2">Subtotal</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cartData?.map((product) => (
-              <TableRaw key={product?.id} product={product} />
-            ))}
-          </tbody>
-        </table>
-        {/* <div className="flex justify-end">
+      {cartData?.length > 0 && (
+        <div className="space-y-3">
+          <table className="w-full overflow-x-scroll">
+            <thead>
+              <tr className="text-left">
+                <th className="border p-2"> </th>
+                <th className="border px-2 hidden md:block"> </th>
+                <th className="border p-2">Product</th>
+                <th className="border px-2">Price</th>
+                <th className="border px-2">Quantity</th>
+                <th className="border px-2">Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cartData?.map((product) => (
+                <TableRaw key={product?.id} product={product} />
+              ))}
+            </tbody>
+          </table>
+          {/* <div className="flex justify-end">
           <button
             onClick={() => handleQuantity(product?.id, quantity)}
             className="px-4 py-2 bg-gray-500 text-white rounded"
@@ -38,7 +50,8 @@ export default function Checkout() {
             Update cart
           </button>
         </div> */}
-      </div>
+        </div>
+      )}
 
       <div className="max-w-[400px] w-full ml-auto space-y-4">
         <h2 className="text-2xl font-bold text-gray-600">Cart totals</h2>
@@ -59,7 +72,10 @@ export default function Checkout() {
             <span>${subtotal ? subtotal : "0"}</span>
           </h3>
         </div>
-        <button className="bg-primary px-4 py-3 text-white text-center w-full">
+        <button
+          onClick={handleOrder}
+          className="bg-primary px-4 py-3 text-white text-center w-full"
+        >
           Place order
         </button>
       </div>

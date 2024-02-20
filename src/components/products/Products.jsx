@@ -26,7 +26,7 @@ export default function Products() {
       {data?.length > 0 ? (
         <>
           <ProductHeader total={total} />
-          <div className="grid grid-cols-3 gap-6 pt-2">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
             {data?.map((product) => (
               <Product key={product?.id} product={product} />
             ))}
