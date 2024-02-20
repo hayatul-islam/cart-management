@@ -7,7 +7,7 @@ export default function Product({ product }) {
   const { handleAddToCart } = useContext(ProductsContext);
   const { title, price, thumbnail, id } = product;
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow text-center">
+    <div className="bg-white border border-gray-200 rounded-lg shadow text-center grid">
       <div className="space-y-2 py-2">
         <Link to={`/products/${id}`}>
           <img className="h-[180px] mx-auto" src={thumbnail} alt={title} />
@@ -22,12 +22,14 @@ export default function Product({ product }) {
         <p className="text-md md:text-lg font-bold text-red-400 ">${price}</p>
       </div>
 
-      <button
-        onClick={() => handleAddToCart(product)}
-        className="w-full border border-b-0 py-2 flex justify-center items-center gap-2 text-gray-600"
-      >
-        <MdShoppingCart /> <span>Add To Cart</span>
-      </button>
+      <div className="grid items-end ">
+        <button
+          onClick={() => handleAddToCart(product)}
+          className="w-full border  py-2 flex justify-center items-center gap-2 text-gray-600 "
+        >
+          <MdShoppingCart /> <span>Add To Cart</span>
+        </button>
+      </div>
     </div>
   );
 }
