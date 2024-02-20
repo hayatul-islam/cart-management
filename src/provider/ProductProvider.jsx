@@ -52,7 +52,6 @@ const ProductProvider = ({ children }) => {
   };
 
   // pagination functionality
-
   const currentPage = skip / limit;
   const handleSkip = (item) => {
     if (item === "prev") {

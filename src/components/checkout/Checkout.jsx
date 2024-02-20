@@ -1,19 +1,14 @@
-import { useContext, useState } from "react";
-import { MdOutlineClose } from "react-icons/md";
-import { useLocation } from "react-router-dom";
+import { useContext } from "react";
 import { ProductsContext } from "../../context";
-import getFindProduct from "../../utils/getFindProduct";
+import TableRaw from "./TableRaw";
 
 export default function Checkout() {
-  const location = useLocation();
-  const queryString = location.search;
-  const id = new URLSearchParams(queryString).get("id");
-  const { cartData, handleRemoveCart, handleQuantity } =
-    useContext(ProductsContext);
+  const { cartData } = useContext(ProductsContext);
 
-  const product = getFindProduct(cartData, id);
-  const subtotal = Number(product?.quantity) * Number(product?.price);
-  const [quantity, setQuantity] = useState(product?.quantity);
+  const subtotal = cartData?.reduce((total, item) => {
+    const itemPrice = item.price * item.quantity;
+    return total + itemPrice;
+  }, 0);
 
   return (
     <div className="space-y-12">
@@ -30,40 +25,19 @@ export default function Checkout() {
             </tr>
           </thead>
           <tbody>
-            <tr className="border">
-              <td className="border px-2 ">
-                <MdOutlineClose
-                  onClick={() => handleRemoveCart(id)}
-                  className="mt-1 text-red-600 cursor-pointer"
-                />
-              </td>
-              <td className="border p-2">
-                <img className="w-10 h-10" src={product?.thumbnail} alt="" />
-              </td>
-              <td className="border px-2 text-blue-600 font-medium">
-                {product?.title}
-              </td>
-              <td className="border px-2">${product?.price}</td>
-              <td className="border px-2">
-                <input
-                  onChange={(e) => setQuantity(e.target.value)}
-                  className="w-16"
-                  defaultValue={product?.quantity}
-                  type="number"
-                />
-              </td>
-              <td className="border px-2">${subtotal ? subtotal : "0"}</td>
-            </tr>
+            {cartData?.map((product) => (
+              <TableRaw key={product?.id} product={product} />
+            ))}
           </tbody>
         </table>
-        <div className="flex justify-end">
+        {/* <div className="flex justify-end">
           <button
             onClick={() => handleQuantity(product?.id, quantity)}
             className="px-4 py-2 bg-gray-500 text-white rounded"
           >
             Update cart
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div className="max-w-[400px] w-full ml-auto space-y-4">
